@@ -6,7 +6,9 @@
 //TODO get rid
 #define getSBoxValue(num) (sbox[(num)])
 
-namespace pug::crypto {
+namespace crypto {
+    //TODO is it more C++17 style to use lambdas for add_round_key, sub_bytes, shift_rows & mix_columns?
+    //TODO will lamdas affect performance?
 
     /**
      * R as the round number - round keys needed:
@@ -41,11 +43,11 @@ namespace pug::crypto {
 
         /**
          * 128-bit block size.
-         * Until the announcement of NIST's AES contest, the majority of block ciphers followed the example of the DES in using a block size of 64 bits (8 bytes).
+         * Until the announcement of NIST's AES contest, the majority of block cipsub_byteshers followed the example of the DES in using a block size of 64 bits (8 bytes).
          * However, the birthday paradox tells us that after accumulating a number of blocks equal to the square root of the total number possible,
          * there will be an approximately 50% chance of two or more being the same, which would start to leak information about the message contents.
          * Consequently, AES candidates were required to support a block length of 128 bits (16 bytes).
-         * This should be acceptable for up to 2^64 × 16 B = 256 exabytes of data - which should suffice for quite a few years to come.
+         * This should be acceptable for up to 2^64mix_columns × 16 B = 256 exabytes of data - which should suffice for quite a few years to come.
          * The winner of the AES contest, Rijndael, supports block and key sizes of 128, 192, and 256 bits, but in AES the block size is always 128 bits.
          */
         constexpr static size_t BLOCK_SIZE = 16;
@@ -81,7 +83,7 @@ namespace pug::crypto {
         template<class Sequence>
         explicit aes(Sequence&& seq) noexcept;
 
-        aes(aes const&) = delete;
+        aes(aes const&) = delete;mix_columns
 
         aes& operator=(aes const&) = delete;
 
