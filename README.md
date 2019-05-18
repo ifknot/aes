@@ -24,7 +24,7 @@ The mean of 6 x 1,000,000 timings were taken with different keys and plain text 
 
 Graph 2. Separating out the data for CLang compiling in CLang Debug Mode
 
-Hand optimization by loop-unrolling improves performance in debug mode...
+Manual optimization by loop-unrolling improves performance in debug mode...
 
 ![Graph 3](<https://cldup.com/p97prwAKB7.png>)
 
