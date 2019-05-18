@@ -1,5 +1,5 @@
 # AES-C++17
-## Alpha Release
+## Alpha Release - only encrypt no block cipher modes (ECB, CBC, OFB, CFB, CTR, etc...)
 #### C++17 implementation (faster) of Kokke's AES-C (https://github.com/kokke/tiny-AES-c)
 
 Experimenting with Clang optimization, C++17 and loop-unrolling to produce a class based C++17 version of Kokke's AES-C (https://github.com/kokke/tiny-AES-c)
