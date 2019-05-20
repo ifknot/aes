@@ -86,18 +86,18 @@ namespace pug::crypto {
 
         /**
          * @brief Encrypt a 16 byte block of plaintext using the session key material
-         * @param p the plaintext(state_t*)buf
+         * @param block_t& block the plain text
          * @return 16 byte block of ciphertext
          */
-        block_t encrypt(block_t& block) {
+        void encrypt(block_t& block) {
             uint8_t round = 0;
-            // add the First round key to the state before starting the rounds.
+            // add the First round key to the block before starting the rounds.
             add_round_key(round, block);
             // first R - 1 rounds are identical...
             auto i = R - 1;
             while(--i) {
                 sub_bytes(block);
-                shift_rows(block); // Rijndael diffusion
+                shift_rows(block);  // Rijndael diffusion
                 mix_columns(block); // Rijndael diffusion
                 add_round_key(round, block);
             }
@@ -112,7 +112,7 @@ namespace pug::crypto {
          * @param c the cyphertext
          * @return 16 byte block of plaintext
          */
-        block_t decrypt(const block_t& c) {
+        block_t decrypt(block_t& block) {
 
         }
 
@@ -146,7 +146,7 @@ namespace pug::crypto {
 
         /**
          * @brief S-box substitution
-         * @param state
+         * @param  block
          */
         inline void sub_bytes(block_t& block) {
             size_t i{0};
@@ -169,8 +169,8 @@ namespace pug::crypto {
         }
 
         /**
-         * @brief shifts the rows in the state to the left, each by a different offset.
-         * @param state
+         * @brief shifts the rows in the block to the left, each by a different offset.
+         * @param  block
          */
         inline void shift_rows(block_t& block) {
             uint8_t rol;
@@ -212,7 +212,7 @@ namespace pug::crypto {
          * @brief consider 16 byte block as 4x4 matrix and mix columns as per Rijndael algorithm.
          * The operation consists in the modular multiplication of two four-term polynomials, whose coefficients are
          * elements of _GF(2^8)_. The modulo used for this operation is _x^4+1_.
-         * @param state
+         * @param  block
          */
         inline void mix_columns(block_t& block) {
             uint8_t c, b, a;
@@ -280,7 +280,7 @@ namespace pug::crypto {
         
         /**
          * @brief This function produces Nb(Nr+1) round keys. 
-         * The round keys are used in each round to decrypt the states.
+         * The round keys are used in each round to decrypt the  blocks.
          * @param key 
          */
         void make_expanded_key(const key_t& key);
