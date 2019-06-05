@@ -1,6 +1,8 @@
-#include <iostream>
+#define CATCH_CONFIG_RUNNER
+#include "catch2.h"
 
-int main() {
+int main( int argc, char* argv[] ) {
 
-    return 0;
+    return Catch::Session().run( argc, argv );
+
 }
