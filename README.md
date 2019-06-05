@@ -1,5 +1,10 @@
 # AES-C++17
-## Alpha Release - only encrypt no block cipher modes (ECB, CBC, OFB, CFB, CTR, etc...)
+## Beta 0.1 
++ aes_encrypt
++ aes_decrypt
++ block_cipher_factory (ECB, CFB, CTR)
++ padder_factory (PKCS5)
++ nonce_factory (crypto secure hardware entropy & pseudo random fall back)
 #### C++17 implementation (faster) of Kokke's AES-C (https://github.com/kokke/tiny-AES-c)
 
 Experimenting with Clang optimization, C++17 and loop-unrolling to produce a class based C++17 version of Kokke's AES-C (https://github.com/kokke/tiny-AES-c)
