@@ -2,7 +2,7 @@
 #define AES_CPP17_AES_H
 
 #include <cstdint>
-#include <stddef.h>
+#include <cstddef>
 
 namespace pug::crypto::aes {
 
