@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <cstddef>
 
-namespace pug::crypto::aes {
+namespace crypto::aes {
 
     /**
      * R as the round number - round keys needed:
