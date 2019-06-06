@@ -1,6 +1,7 @@
 #include "catch2.h"
 
 #include "aes_encrypt.h"
+#include "aes_decrypt.h"
 #include "phex.h"
 #include "stopwatch.h"
 
@@ -12,7 +13,7 @@ TEST_CASE( "AES encrypt NIST tests", "[aes_encrypt]" ) {
 
     using block_t = crypto::aes::encrypt<>::block_t;
     using encode_t = crypto::aes::encrypt<>;
-    //using decode_t = crypto::aes::decrypt<>;
+    using decode_t = crypto::aes::decrypt<>;
     using key_t = std::array<crypto::aes::encrypt<>::value_type, 32ul>;
 
     util::stopwatch<std::chrono::milliseconds> sw; //default nanoseconds
@@ -30,8 +31,10 @@ TEST_CASE( "AES encrypt NIST tests", "[aes_encrypt]" ) {
         block_t test = plain;
 
         encode_t encrypt(key);
+        decode_t decrypt(key);
 
         REQUIRE(encrypt.block_size() == crypto::BLOCK_SIZE);
+        REQUIRE(decrypt.block_size() == crypto::BLOCK_SIZE);
 
         util::phex(test);
         util::phex(cipher);
@@ -40,12 +43,24 @@ TEST_CASE( "AES encrypt NIST tests", "[aes_encrypt]" ) {
 
         REQUIRE(cipher == test);
 
+        decrypt.block(test.begin());
+        util::phex(plain);
+        util::phex(test);
+        REQUIRE(plain == test);
+
         sw.start();
         for(int i = 0; i < SAMPLES; ++i) {
             encrypt.block(test.begin());
         }
         sw.stop();
         std::cout << "\ntime encrypt " << SAMPLES << " blocks = " << sw.elapsed() / 1000.0 << "s" << std::endl;
+
+        sw.start();
+        for(int i = 0; i < SAMPLES; ++i) {
+            decrypt.block(test.begin());
+        }
+        sw.stop();
+        std::cout << "\ntime decrypt " << SAMPLES << " blocks = " << sw.elapsed() / 1000.0 << "s" << std::endl;
 
     }
 
