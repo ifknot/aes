@@ -3,8 +3,8 @@
 
 #include <array>
 
-#include "block_cipher.h"
-#include "aes.h"
+#include "block_cipher_constants.h"
+#include "aes_constants.h"
 
 namespace crypto::aes {
 

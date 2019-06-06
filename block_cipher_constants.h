@@ -1,5 +1,5 @@
-#ifndef AES_CPP17_BLOCK_CIPHER_H
-#define AES_CPP17_BLOCK_CIPHER_H
+#ifndef AES_CPP17_BLOCK_CIPHER_CONSTANTS_H
+#define AES_CPP17_BLOCK_CIPHER_CONSTANTS_H
 
 #include <cstddef>
 
@@ -38,4 +38,4 @@ namespace crypto {
 }
 
 
-#endif //AES_CPP17_BLOCK_CIPHER_H
+#endif //AES_CPP17_BLOCK_CIPHER_CONSTANTS_H

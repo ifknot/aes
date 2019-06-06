@@ -1,5 +1,5 @@
-#ifndef AES_CPP17_AES_H
-#define AES_CPP17_AES_H
+#ifndef AES_CPP17_AES_CONSTANTS_H
+#define AES_CPP17_AES_CONSTANTS_H
 
 #include <cstdint>
 #include <cstddef>
@@ -122,4 +122,4 @@ namespace crypto::aes {
 
 }
 
-#endif //AES_CPP17_AES_H
+#endif //AES_CPP17_AES_CONSTANTS_H
