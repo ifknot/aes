@@ -9,7 +9,11 @@
 
 TEST_CASE("AES encrypt NIST tests", "[aes_encrypt]") {
 
+#ifdef NDEBUG
     static const size_t SAMPLES = 1'000'000;
+#else
+    static const size_t SAMPLES = 1'000;
+#endif
 
     using block_t = crypto::aes::encrypt<>::block_t;
     using encode_t = crypto::aes::encrypt<>;
