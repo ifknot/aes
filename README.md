@@ -1,5 +1,6 @@
 # AES-C++17 (cipher happiness)
 ![happy key](https://cldup.com/3JHRDKNv4C.png)
+<!--- Derivative of Jef Lippiatt https://dribbble.com/nogginfuel --->
 ## Header only, iterator driven, in-place block cipher software
 #### C++17 implementation of [Kokke's AES-C](https://github.com/kokke/tiny-AES-c)
 Learning C++17, implementing C++ idioms, and experimenting with loop-unrolling to produce a class based C++17 version of Kokke's AES-C (https://github.com/kokke/tiny-AES-c)
