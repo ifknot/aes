@@ -7,9 +7,9 @@ Learning C++17, implementing C++ idioms, and experimenting with loop-unrolling t
 2019/08/06 _Beta_ 0.1.0
 + aes_encrypt
 + aes_decrypt
-+ block_cipher_factory (ECB, CFB, CTR)
++ ~~block_cipher_factory (ECB, CFB, CTR)~~
 + padder_factory (PKCS5)
-+ nonce_factory (crypto secure hardware entropy & pseudo random fall back)
++ ~~nonce_factory (crypto secure hardware entropy & pseudo random fall back)~~
 
 
 
