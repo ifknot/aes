@@ -5,6 +5,11 @@
 
 namespace util {
 
+    /**
+     * @brief utility to pretty print 16byte hex blocks in debug mode
+     * @tparam Sequence
+     * @param seq
+     */
     template<typename Sequence>
     void phex(Sequence &&seq) {
 #ifndef NDEBUG

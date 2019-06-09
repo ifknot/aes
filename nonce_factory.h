@@ -6,7 +6,7 @@
 #include <array>
 
 //#define NDEBUG
-//#define __RDSEED__
+#define __RDSEED__
 
 #if defined(_MSC_VER)
 /* Microsoft C/C++-compatible compiler */
@@ -32,17 +32,6 @@
 #include "block_cipher_constants.h"
 #include "cipher_exception.h"
 
-/**
- * @note There are a number of problems with writing a nonce factory:
- * + Only certain later CPUs support hardware entropy as hardware random number generators (HRNG) Intel Ivy Bridge 2012, AMD 2015
- * + There does not appear to be any consistent compile time way of detecting HRNG support making conditional compilation impossible
- * + Different compilers implement the intrinsics to read the HRNG differently and incompletely
- * + The __RDSEED__ constant is used to select compile time HRNG vs PRNG but must be set manually by using ```can_rdseed``` first to manually test the target system
- * + A cryptographically secure nonce requires a HRNG
- * + A cryptographically secure nonce must be at least 12 bytes long to effectively mitigate birthday attacks
- * + In the abscence of an HRNG a pseudo-random number generator (PRNG) fallback is provided for testing purposed _but it is not secure_
- * @warning I'm not even sure that providing a PRNG fallback for non-HRNG settings is a good idea?!
- */
 namespace crypto {
 
 #ifdef _MSC_VER  // Use MSVC __cpuid
@@ -125,7 +114,7 @@ namespace crypto {
 #ifdef __RDSEED__
 
     /**
-     * @brief Generate large stateless _cryptographically secure_ random nonces from entropy hardware.
+     * @brief Generate large stateless _cryptographically secure_ random nonces from 32 bit entropy hardware.
      * RDSEED, whilst similar to RDRAND, provides higher level access to the entropy hardware.
      * The RDSEED generator and processor instruction rdseed are available with Intel Broadwell CPUs (and later)
      * and AMD Zen CPUs (and later).
@@ -133,10 +122,21 @@ namespace crypto {
      * @tparam T
      */
     template<nonce_mode_t M = CSSEED32, size_t nonce_size = NONCE_SIZE, typename T = uint8_t>
+    /**
+      * @note There are a number of problems with writing a nonce factory:
+      * + Only certain later CPUs support hardware entropy as hardware random number generators (HRNG) Intel Ivy Bridge 2012, AMD 2015
+      * + There does not appear to be any consistent compile time way of detecting HRNG support making conditional compilation impossible
+      * + Different compilers implement the intrinsics to read the HRNG differently and incompletely
+      * + The __RDSEED__ constant is used to select compile time HRNG vs PRNG but must be set manually by using ```can_rdseed``` first to manually test the target system
+      * + A cryptographically secure nonce requires a HRNG
+      * + A cryptographically secure nonce must be at least 12 bytes long to effectively mitigate birthday attacks
+      * + In the abscence of an HRNG a pseudo-random number generator (PRNG) fallback is provided for testing purposed _but it is not secure_
+      * @warning I'm not even sure that providing a PRNG fallback for non-HRNG settings is a good idea?!
+      */
     struct nonce {
 
         using value_type = T;
-        using block_t = std::array<T, pug::crypto::BLOCK_SIZE>;
+        using block_t = std::array<T, crypto::BLOCK_SIZE>;
         using seed_t = unsigned int;
 
         /**
@@ -180,11 +180,16 @@ namespace crypto {
 
     };
 
+    /**
+     * @brief Generate large stateless _cryptographically secure_ random nonces from 16 bit entropy hardware.
+     * @tparam nonce_size
+     * @tparam T
+     */
     template<size_t nonce_size, typename T>
     struct nonce<CSSEED16, nonce_size, T> {
 
         using value_type = T;
-        using block_t = std::array<T, pug::crypto::BLOCK_SIZE>;
+        using block_t = std::array<T, crypto::BLOCK_SIZE>;
         using seed_t = unsigned short;
 
         /**
@@ -228,13 +233,18 @@ namespace crypto {
 
     };
 
-    #ifndef _MSC_VER
-    // N.B. MSVC intrin.h does not support _rdseed64_step
+    #ifndef _MSC_VER // N.B. MSVC intrin.h does not support _rdseed64_step
+
+    /**
+     * @brief Generate large stateless _cryptographically secure_ random nonces from 64 bit entropy hardware.
+     * @tparam nonce_size
+     * @tparam T
+     */
     template<size_t nonce_size, typename T>
     struct nonce<CSSEED64, nonce_size, T> {
 
         using value_type = T;
-        using block_t = std::array<T, pug::crypto::BLOCK_SIZE>;
+        using block_t = std::array<T, crypto::BLOCK_SIZE>;
         using seed_t = unsigned long long;
 
         /**

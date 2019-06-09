@@ -9,6 +9,9 @@ namespace doh {
 
 #if defined(ENG)
 
+    /**
+     * @brief cipher exception error messages
+     */
     static const std::string UNPADDING = " Decryption Failed - Padding Checksum Error! ";
     static const std::string DETERMINISTIC = " Deterministic Random Number Generator! ";
 

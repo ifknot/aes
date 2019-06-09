@@ -8,7 +8,7 @@
 namespace doh {
 
     /**
-     * @brief base crypto exception
+     * @brief Base crypto exception
      */
     struct cipher_exception: public std::runtime_error {
 

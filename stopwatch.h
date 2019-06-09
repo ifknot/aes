@@ -5,6 +5,11 @@
 
 namespace util {
 
+    /**
+     * @brief stopwatch iodiom high precision timer for measuring software performance
+     * @tparam PolicyT - std::chrono::nanoseconds (default), milliseconds, microseconds, seconds
+     * @tparam PolicyClock - std::chrono::steady_clock (default), system_clock, high_resolution_clock
+     */
     template<typename PolicyT = std::chrono::nanoseconds,
             typename PolicyClock = std::chrono::steady_clock>
     class stopwatch {
