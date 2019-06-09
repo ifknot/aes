@@ -7,9 +7,9 @@
 #include <iostream>
 #endif
 
-#include "block_cipher_factory.h"
-#include "stopwatch.h"
-#include "phex.h"
+#include "crypto/block_cipher_factory.h"
+#include "util/stopwatch.h"
+#include "util/phex.h"
 
 static const size_t SAMPLES = 1'000;
 

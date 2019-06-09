@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "nonce_factory.h"
-#include "phex.h"
+#include "crypto/nonce_factory.h"
+#include "util/phex.h"
 
 TEST_CASE("Nonce Factory", "[nonce_factory]") {
 #ifndef NDEBUG

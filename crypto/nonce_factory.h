@@ -6,7 +6,7 @@
 #include <array>
 
 //#define NDEBUG
-#define __RDSEED__
+//#define __RDSEED__
 
 #if defined(_MSC_VER)
 /* Microsoft C/C++-compatible compiler */
