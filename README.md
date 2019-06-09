@@ -61,12 +61,12 @@ CTR_aes.decrypt(test.begin() + 16, test.end()); // yes it just calls encrypt but
 ```
 #### Want to use 2fish instead of AES in a padded CBC 128bit key block cipher?
 ```cpp
-//request an AES (default) counter (CTR) block_cipher from the compile time factory
+//request a 2FISH CBC 128bit key block_cipher from the compile time factory
 using cipher_t = crypto::block_cipher<crypto::CBC, crypto::2fish<crypto::N128>>;
 //default PKCS5 padder
 using padder_t = crypto::padder<>;
-// 256 bit key
-using key_t = std::array<aes_t::value_type, 32>;
+// 128 bit key
+using key_t = std::array<aes_t::value_type, 16>;
 
 // a container of plain text 
 std::vector<uint8_t> plain = 
@@ -96,7 +96,6 @@ CBC_2fish.encrypt(test.begin() + 16, test.end());
 
 //decrypt a section of the container as defined by the passed iterators
 CBC_2fish.decrypt(test.begin() + 16, test.end());
-
 
 ```
 
