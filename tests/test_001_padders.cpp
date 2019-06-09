@@ -79,7 +79,6 @@ TEST_CASE("Padder Factory", "[padder_factory]") {
                 CHECK_THROWS_AS(pkcs5.unpad(plain.begin(), plain.end()), doh::cipher_exception);
                 (*it)++;
                 plain.resize(plain.size() - pkcs5.unpad(plain.begin(), plain.end()));
-
         }
 
     }

@@ -94,7 +94,11 @@ cipher_t CBC_2fish(key);
 CBC_2fish.encrypt(test.begin() + 16, test.end());
 
 //decrypt a section of the container as defined by the passed iterators
-CBC_2fish.decrypt(test.begin() + 16, test.end());
+try {
+    CBC_2fish.decrypt(test.begin() + 16, test.end());
+} catch(doh::cipher_exception& e) {
+    e.what();
+}
 
 ```
 
