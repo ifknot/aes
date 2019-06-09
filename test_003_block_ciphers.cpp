@@ -63,33 +63,22 @@ TEST_CASE("AES block cipher modes", "[block_cipher_factory]") {
         util::phex(plain);
         util::phex(test);
         REQUIRE(test == plain);
-sw.start();
-                        for(size_t i = 0; i < SAMPLES; ++i) {
-                            aes.encrypt(test.begin(), test.end());
-                        }
-                        sw.stop();
-                        std::cout << "\nT encrypt = " << sw.elapsed() << std::endl;
 
-                        sw.start();
-                        for(size_t i = 0; i < SAMPLES; ++i) {
-                            aes.decrypt(test.begin(), test.end());
-                        }
-                        sw.stop();
-                        std::cout << "\nT decrypt = " << sw.elapsed() << std::endl;
+
 #if defined(NDEBUG) // provide performance tests
         sw.start();
-                        for(size_t i = 0; i < SAMPLES; ++i) {
-                            aes.encrypt(test.begin(), test.end());
-                        }
-                        sw.stop();
-                        std::cout << "\nT encrypt = " << sw.elapsed() << std::endl;
+        for(size_t i = 0; i < SAMPLES; ++i) {
+            aes.encrypt(test.begin(), test.end());
+        }
+        sw.stop();
+        std::cout << "\nT encrypt = " << sw.elapsed() << std::endl;
 
-                        sw.start();
-                        for(size_t i = 0; i < SAMPLES; ++i) {
-                            aes.decrypt(test.begin(), test.end());
-                        }
-                        sw.stop();
-                        std::cout << "\nT decrypt = " << sw.elapsed() << std::endl;
+        sw.start();
+        for(size_t i = 0; i < SAMPLES; ++i) {
+            aes.decrypt(test.begin(), test.end());
+        }
+        sw.stop();
+        std::cout << "\nT decrypt = " << sw.elapsed() << std::endl;
 #endif
 
     }
