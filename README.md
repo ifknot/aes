@@ -49,7 +49,7 @@ CTR_aes.decrypt(test.begin() + 16, test.end()); // yes it just calls encrypt but
 ```cpp
 //request a 2FISH CBC 128bit key block_cipher from the compile time factory
 using cipher_t = crypto::block_cipher<crypto::CBC, crypto::2fish<crypto::N128>>;
-//default PKCS5 padder
+//default PKCS7 padder
 using padder_t = crypto::padder<>;
 // 128 bit key
 using key_t = std::array<aes_t::value_type, 16>;
@@ -88,7 +88,7 @@ try {
 
 ```
 #### History:
-2019/08/09 _Beta_ 0.1.2
+2019/08/10 _Beta_ 0.1.2
 + fix PKCS5 is actually PKCS7 
 + add ANSI X9.23
 + add PKCS5 as an exercise in template overloading and for completeness
