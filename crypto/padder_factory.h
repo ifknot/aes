@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdint>
 
-#include <iostream>
+//#include <iostream>
 
 #include "cipher_exception.h"
 
@@ -136,7 +136,6 @@ namespace crypto {
         size_t unpad(ConstIterator first, ConstIterator last) {
             int i{*(last - 1)};
             for(int i{*(last - 1)}; i > 1; i--) {
-                std::cout << "~~~~~~~~~~~  " << i << "\n";
                 if(*(last - i) != 0x00) {
                     throw doh::cipher_exception(doh::UNPADDING);
                 }
@@ -161,6 +160,77 @@ namespace crypto {
          */
         inline size_t terminator(size_t data_size) {
             return block_size() - data_size % block_size();
+        }
+
+    };
+
+    /**
+     * PKCS#5 padding is defined for 8-byte block sizes
+     * @warning PKCS#5 padding can not be used for 16 byte block size AES.
+     * @note PKCS#5 padding was only defined with (triple) DES operation in mind.
+     * @tparam T
+     */
+    template<typename T>
+    struct padder<PKCS5, 8, T> {
+
+        //ToDo: static_assert BLOCK_SIZE multiple of 8 and less than 2040
+
+        using value_type  = T;
+
+        /**
+         * @brief PKCS7 padding scheme for writing pad values to an external container
+         * If the block length is _B_then add _N_ padding bytes of value _N_ to make the input length up to the
+         * next exact multiple of B.
+         * @note If the input length is already an exact multiple of B then add B bytes of value B.
+         * Thus padding of length N between one and B bytes is always added in an unambiguous manner.
+         * @tparam Iterator
+         * @param first
+         * @param last
+         * @param out - iterator to a destination container with _at least_ block length space
+         * @return size_t the number of padding bytes written
+         */
+        template<typename ConstIterator, typename Iterator>
+        size_t pad(ConstIterator first, ConstIterator last, Iterator out) {
+            size_t pv= pad_value(static_cast<size_t>(std::distance(first, last)));
+            for(auto i{pv}; i--;) {
+                *out++ = pv;
+            }
+            return pv;
+        }
+
+        /**
+         * @brief short cut unique to the repeated values of PKCS5
+         * @param data_size
+         * @return pad value - which can be used in a simple loop to pad the data container
+         */
+        inline size_t pad_value(size_t data_size) {
+            return block_size() - data_size % block_size();
+        }
+
+        /**
+         * @brief After decrypting, check that the last N bytes of the decrypted data all have value N with 1 < N ≤ B.
+         * If so return number of bytes to strip, otherwise throw a decryption error.
+         * @tparam Iterator
+         * @param first
+         * @param last
+         * @return size_t the number of padding bytes to be stripped
+         */
+        template<typename ConstIterator>
+        size_t unpad(ConstIterator first, ConstIterator last) {
+            for(auto i{*(last - 1)}; i;) {
+                if(*(last - i--) != *(last - 1)) {
+                    throw doh::cipher_exception(doh::UNPADDING);
+                }
+            }
+            return *(last - 1);
+        }
+
+        inline static padder_mode_t mode() {
+            return PKCS5;
+        }
+
+        inline static size_t block_size() {
+            return 8;
         }
 
     };
