@@ -10,8 +10,16 @@
 
 namespace crypto {
 
+    /**
+     * The difference between the PKCS#5 and PKCS#7 padding mechanisms is the block size:
+     * + PKCS#5 padding is defined for 8-byte block sizes
+     * + PKCS#7 padding will work for any block size from 1 to 255 bytes
+     * So, fundamentally, PKCS#5 padding is a subset of PKCS#7 padding for 8 byte block sizes.
+     * Therefore, PKCS#5 padding can not be used for 16 byte block size AES.
+     * @note PKCS#5 padding was only defined with (triple) DES operation in mind.
+     */
     enum padder_mode_t {
-        PKCS5 //ToDo: , PKCS7, ANSIX923, ONESZEROS
+        PKCS7 //ToDo: ANSIX923, ONESZEROS, PKCS5
     };
 
     /**
@@ -23,7 +31,7 @@ namespace crypto {
      * @tparam BLOCK_SIZE
      * @tparam T
      */
-    template<padder_mode_t M = PKCS5, size_t BLOCK_SIZE = 16, typename T = uint8_t>
+    template<padder_mode_t M = PKCS7, size_t BLOCK_SIZE = 16, typename T = uint8_t>
     struct padder {
 
         //ToDo: static_assert BLOCK_SIZE multiple of 8 and less than 2040
@@ -31,8 +39,8 @@ namespace crypto {
         using value_type  = T;
 
         /**
-         * @brief general purpose padding interface for writing pad values to an external container
-         * If the block length is _B_then add _N_padding bytes of value _N_ to make the input length up to the
+         * @brief PKCS7 general purpose padding interface for writing pad values to an external container
+         * If the block length is _B_then add _N_ padding bytes of value _N_ to make the input length up to the
          * next exact multiple of B.
          * @note If the input length is already an exact multiple of B then add B bytes of value B.
          * Thus padding of length N between one and B bytes is always added in an unambiguous manner.
