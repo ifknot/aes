@@ -1,9 +1,9 @@
 #include "catch2.h"
 
-#include "crypto/aes_encrypt.h"
-#include "crypto/aes_decrypt.h"
-#include "util/phex.h"
-#include "util/stopwatch.h"
+#include "../crypto/aes_encrypt.h"
+#include "../crypto/aes_decrypt.h"
+#include "../util/phex.h"
+#include "../util/stopwatch.h"
 
 #include <iostream>
 

@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "crypto/padder_factory.h"
-#include "util/phex.h"
+#include "../crypto/padder_factory.h"
+#include "../util/phex.h"
 
 TEST_CASE("Padder Factory", "[padder_factory]") {
 

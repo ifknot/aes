@@ -7,9 +7,9 @@
 #include <iostream>
 #endif
 
-#include "crypto/block_cipher_factory.h"
-#include "util/stopwatch.h"
-#include "util/phex.h"
+#include "../crypto/block_cipher_factory.h"
+#include "../util/stopwatch.h"
+#include "../util/phex.h"
 
 static const size_t SAMPLES = 1'000;
 
@@ -175,7 +175,7 @@ TEST_CASE("AES block cipher modes", "[block_cipher_factory]") {
         util::phex(nonce);
         sw.stop();
         std::cout << "\nT inc 65536 = " << sw.elapsed() << std::endl;
-        AssertThat(nonce == nonce65536, IsTrue());
+        REQUIRE(nonce == nonce65536);
     }
 #endif
 
@@ -228,7 +228,7 @@ TEST_CASE("AES block cipher modes", "[block_cipher_factory]") {
         util::phex(plain);
         REQUIRE(test == plain);
 #if defined(NDEBUG)
-        test.insert(test.begin(), nc.begin(), nc.end());
+        test.insert(test.begin(), nonce.begin(), nonce.end());
         sw.start();
         for(size_t i = 0; i < SAMPLES; ++i) {
             aes.encrypt(test.begin(), test.end());
