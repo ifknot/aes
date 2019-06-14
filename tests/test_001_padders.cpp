@@ -5,7 +5,7 @@
 #include "../crypto/padder_factory.h"
 #include "../util/phex.h"
 
-TEST_CASE("Padder Factory", "[padder_factory]") {
+TEST_CASE("Padder Factory", "[.padder_factory]") {
 
     SECTION("PKCS7") {
         using padder_t = crypto::padder<>;

@@ -5,7 +5,7 @@
 #include "../crypto/nonce_factory.h"
 #include "../util/phex.h"
 
-TEST_CASE("Nonce Factory", "[nonce_factory]") {
+TEST_CASE("Nonce Factory", "[.nonce_factory]") {
 #ifndef NDEBUG
 
     #ifndef __RDSEED__

@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-TEST_CASE("AES encrypt NIST tests", "[aes_encrypt]") {
+TEST_CASE("AES encrypt NIST tests", "[.aes_encrypt]") {
 
 #ifdef NDEBUG
     static const size_t SAMPLES = 1'000'000;
