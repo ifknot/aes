@@ -13,7 +13,7 @@
 
 static const size_t SAMPLES = 1'000;
 
-TEST_CASE("AES block cipher modes", "[block_cipher_factory]") {
+TEST_CASE("AES block cipher modes", "[.block_cipher_factory]") {
 
     using aes_t = crypto::block_cipher<>;
     using block_t = aes_t::block_t;
