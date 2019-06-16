@@ -7,7 +7,7 @@ Learning C++17, implementing C++ idioms, and experimenting with loop-unrolling t
 
 ### Performance 
 At kokke's behest and just for fun...(TLDR ifknot faster than kokke)
-This is a direct comparision noting that there are a number of AES speed optimizations but kokke's objective was always to favour small memory footprint over performance.
+This is a direct comparision noting that there are a number of AES speed optimizations but **kokke's objective was always to favour small memory footprint over performance**.
 
 _(Not least of which is to use AES-NI extensions to the x86 instruction set architecture for microprocessors from Intel and AMD proposed by Intel in March 2008.)_
 
