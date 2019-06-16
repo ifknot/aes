@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include <iostream>
+#include <fstream>
 
 #include "kokke_aes.h"
 #include "../util/stopwatch.h"
@@ -59,22 +60,24 @@ TEST_CASE("Performance kokke ECB ", "[kokke performance]") {
 
     AES_init_ctx(&ctx, key);
 
+    std::ofstream df{"kokke.csv"};
+    df << "encrypt,decrypt\n";
     for(size_t j{0}; j < TRIALS; ++j) {
         sw.start();
         for (auto i{0}; i < SAMPLES; ++i) {
             AES_ECB_encrypt(&ctx, in);
         }
         sw.stop();
-        std::cout << "\nT encrypt" << SAMPLES << " = " << sw.elapsed() / 1000.0 << std::endl;
-    }
+        std::cout << "\nT encrypt " << SAMPLES << " = " << sw.elapsed() / 1000.0 << std::endl;
+        df << sw.elapsed() / 1000.0 << ",";
 
-    for(size_t j{0}; j < TRIALS; ++j) {
         sw.start();
         for (auto i{0}; i < SAMPLES; ++i) {
             AES_ECB_decrypt(&ctx, in);
         }
         sw.stop();
-        std::cout << "\nT decrypt" << SAMPLES << " = " << sw.elapsed() / 1000.0 << std::endl;
+        std::cout << "\nT decrypt " << SAMPLES << " = " << sw.elapsed() / 1000.0 << std::endl;
+        df << sw.elapsed() / 1000.0 << std::endl;
     }
 
 }

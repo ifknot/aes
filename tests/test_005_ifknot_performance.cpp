@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <iostream>
+#include <fstream>
 
 #include "../crypto/block_cipher_factory.h"
 #include "../util/stopwatch.h"
@@ -37,21 +38,24 @@ TEST_CASE("Performance ifknot ECB ", "[ifknot performance]") {
         AES256.decrypt(test.begin(), test.end());
         REQUIRE(test == plain);
 
+        std::ofstream df{"ifknot.csv"};
+        df << "encrypt,decrypt\n";
         for(size_t j{0}; j < TRIALS; ++j) {
             sw.start();
             for (size_t i = 0; i < SAMPLES; ++i) {
                 AES256.encrypt(test.begin(), test.end());
             }
             sw.stop();
-            std::cout << "\nT encrypt" << SAMPLES << " = " << sw.elapsed() / 1000.0 << std::endl;
-        }
-        for(size_t j{0}; j < TRIALS; ++j) {
+            std::cout << "\nT encrypt " << SAMPLES << " = " << sw.elapsed() / 1000.0 << std::endl;
+            df << sw.elapsed() / 1000.0 << ",";
+
             sw.start();
             for (size_t i = 0; i < SAMPLES; ++i) {
                 AES256.decrypt(test.begin(), test.end());
             }
             sw.stop();
-            std::cout << "\nT decrypt" << SAMPLES << " = " << sw.elapsed() / 1000.0 << std::endl;
+            std::cout << "\nT decrypt " << SAMPLES << " = " << sw.elapsed() / 1000.0 << std::endl;
+            df << sw.elapsed() / 1000.0 << std::endl;
         }
 
     }
