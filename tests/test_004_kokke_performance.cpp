@@ -11,7 +11,7 @@
 #include "../util/stopwatch.h"
 
 static const size_t SAMPLES = 1'000'000;
-static const size_t TRIALS = 10;
+static const size_t TRIALS = 50;
 
 static int test_encrypt_ecb(void)
 {
