@@ -5,6 +5,19 @@
 #### C++17 implementation of [Kokke's AES-C](https://github.com/kokke/tiny-AES-c)
 Learning C++17, implementing C++ idioms, and experimenting with loop-unrolling to produce a class based C++17 version of Kokke's AES-C (https://github.com/kokke/tiny-AES-c)
 
+### Performance (TLDR ifknot faster than kokke)
+This is a direct comparision noting that there are a number of AES speed optimizations.
+
+_(Not least of which is to use AES-NI extensions to the x86 instruction set architecture for microprocessors from Intel and AMD proposed by Intel in March 2008.)_
+
+![encrypt performance](https://cldup.com/_uTWvk0-xR.png)
+Graph 1. - HP Z600, Linux Clang (Release) execution time for 1 million _encrypts_ sampled 50 times. Despite a small group of slow outliers for both kokke and ifknot AES implementations ifknot AES-CPP17 is faster than kokke tiny-AES-c.
+
+![decrypt performance](https://cldup.com/7kumWZcs_O.png)
+Graph 2. - HP Z600, Linux Clang (Release) execution time for 1 million _decrypts_ sampled 50 times. Decryption is twice as slow for both kokke and ifknot AES implementations - this is likely due to the Galois Field inverse multiplication in a finite field for the inverse mix column directions.
+This could be optimized with a lookup table or simply favouring Counter Cipher Block Mode, regardless ifknot AES-CPP17 is faster than kokke tiny-AES-c.
+
+
 ### Usage:
 
 #### Given _any_ container that provides a non-const forward iterator then for **inplace** encryption:
