@@ -10,6 +10,7 @@ Learning C++17, implementing C++ idioms, and experimenting with loop-unrolling t
 #### Given _any_ container that provides a non-const forward iterator then for **inplace** encryption:
 
 ```cpp
+#include "crypto/block_cipher_factory.h"
 //request an AES (default) counter (CTR) block_cipher from the compile time factory
 using cipher_t = crypto::block_cipher<crypto::CTR>;
 // 256 bit key
