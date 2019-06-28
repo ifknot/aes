@@ -14,7 +14,7 @@ Learning C++17, implementing C++ idioms, and experimenting with loop-unrolling t
 //request an AES (default) counter (CTR) block_cipher from the compile time factory
 using cipher_t = crypto::block_cipher<crypto::CTR>;
 // 256 bit key
-using key_t = std::array<aes_t::value_type, 32>;
+using key_t = std::array<cipher_t::value_type, 32>;
 
 // a container of plain text 
 std::vector<uint8_t> plain = 
